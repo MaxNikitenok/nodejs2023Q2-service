@@ -11,11 +11,10 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { v4 as uuid4 } from 'uuid';
 import { isString } from 'class-validator';
+import { Database } from 'src/db/db';
 
 @Injectable()
 export class UsersService {
-  private users: User[] = [];
-
   create(createUserDto: CreateUserDto) {
     if (!isString(createUserDto.login) || !isString(createUserDto.password)) {
       throw new HttpException(
@@ -30,16 +29,16 @@ export class UsersService {
       createdAt: Date.now(),
       updatedAt: Date.now(),
     };
-    this.users.push(newUser);
+    Database.users.push(newUser);
     return newUser;
   }
 
   findAll() {
-    return this.users;
+    return Database.users;
   }
 
   findOne(id: string): User | undefined {
-    return this.users.find((user) => user.id === id);
+    return Database.users.find((user) => user.id === id);
   }
 
   update(id: string, updateUserDto: UpdateUserDto) {
@@ -51,7 +50,7 @@ export class UsersService {
     if (!isString(updateUserDto.newPassword)) {
       throw new BadRequestException('Invalid dto');
     }
-    const user = this.users.find((user) => user.id === id);
+    const user = Database.users.find((user) => user.id === id);
     if (!user) {
       throw new NotFoundException('User not found');
     }
@@ -67,10 +66,10 @@ export class UsersService {
   }
 
   delete(id: string) {
-    const user = this.users.find((user) => user.id === id);
-    const userIndex = this.users.findIndex((user) => user.id === id);
+    const user = Database.users.find((user) => user.id === id);
+    const userIndex = Database.users.findIndex((user) => user.id === id);
     if (user) {
-      this.users.splice(userIndex, 1);
+      Database.users.splice(userIndex, 1);
     }
   }
 }

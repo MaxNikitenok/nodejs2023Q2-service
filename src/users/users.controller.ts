@@ -1,22 +1,22 @@
-import { validate } from 'uuid';
 import {
   Controller,
-  Get,
   Post,
   Body,
-  Put,
+  Get,
   Param,
+  Put,
   Delete,
   HttpCode,
   HttpStatus,
   BadRequestException,
   NotFoundException,
 } from '@nestjs/common';
-import { plainToClass } from 'class-transformer';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
+import { validate } from 'uuid';
+import { plainToClass } from 'class-transformer';
 
 @Controller('user')
 export class UsersController {
@@ -54,7 +54,7 @@ export class UsersController {
   }
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  delete(@Param('id') id: string) {
     if (!validate(id)) {
       throw new BadRequestException('Invalid userId');
     }
