@@ -77,6 +77,7 @@ export class ArtistsController {
       throw new BadRequestException('Invalid artistId');
     }
     const artist = this.artistsService.findOne(id);
+
     if (!artist) {
       throw new NotFoundException('Artist not found');
     }
