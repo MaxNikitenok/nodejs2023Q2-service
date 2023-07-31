@@ -41,5 +41,17 @@ export class ArtistsService {
 
   delete(id: string) {
     Database.artists = Database.artists.filter((artist) => artist.id !== id);
+    Database.tracks = Database.tracks.map((track) => {
+      if (track.artistId === id) {
+        track.artistId = null;
+      }
+      return track;
+    });
+    Database.albums = Database.albums.map((track) => {
+      if (track.artistId === id) {
+        track.artistId = null;
+      }
+      return track;
+    });
   }
 }

@@ -28,7 +28,6 @@ export class AlbumsService {
   }
 
   update(id: string, albumDto: UpdateAlbumDto) {
-    console.log('>>>>>>>', albumDto);
     const album = Database.albums.find((album) => album.id === id);
 
     album.name = albumDto.name;
@@ -40,5 +39,11 @@ export class AlbumsService {
 
   delete(id: string) {
     Database.albums = Database.albums.filter((album) => album.id !== id);
+    Database.tracks = Database.tracks.map((track) => {
+      if (track.albumId === id) {
+        track.albumId = null;
+      }
+      return track;
+    });
   }
 }
