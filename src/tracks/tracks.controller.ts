@@ -24,7 +24,6 @@ export class TracksController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   create(@Body() trackDto: CreateTrackDto) {
-    console.log(trackDto);
     if (!trackDto || !trackDto.name || !trackDto.duration) {
       throw new BadRequestException('Invalid dto');
     }

@@ -7,7 +7,7 @@ import { Database } from 'src/db/db';
 
 @Injectable()
 export class ArtistsService {
-  create(artistDto: CreateArtistDto): Artist {
+  create(artistDto: CreateArtistDto) {
     const newArtist = {
       ...artistDto,
       id: uuid4(),
@@ -53,5 +53,8 @@ export class ArtistsService {
       }
       return track;
     });
+    Database.favorites.artists = Database.favorites.artists.filter(
+      (artistId) => artistId !== id,
+    );
   }
 }

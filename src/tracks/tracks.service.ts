@@ -25,7 +25,6 @@ export class TracksService {
   }
 
   update(id: string, trackDto: UpdateTrackDto): Track {
-    console.log(trackDto);
     Database.tracks = Database.tracks.map((track) => {
       if (track.id === id) {
         track = Object.assign(track, trackDto);
@@ -37,5 +36,8 @@ export class TracksService {
 
   delete(id: string) {
     Database.tracks = Database.tracks.filter((track) => track.id !== id);
+    Database.favorites.tracks = Database.favorites.tracks.filter(
+      (trackId) => trackId !== id,
+    );
   }
 }

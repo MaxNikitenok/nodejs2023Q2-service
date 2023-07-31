@@ -45,5 +45,8 @@ export class AlbumsService {
       }
       return track;
     });
+    Database.favorites.albums = Database.favorites.albums.filter(
+      (albumId) => albumId !== id,
+    );
   }
 }
