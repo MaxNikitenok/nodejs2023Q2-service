@@ -9,12 +9,24 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    volumes:
+    - ./src:/app/src
+    networks:
+      - default
     command: npm run start:dev
     ports: 
       - ${PORT}:${PORT}
 
-  # db:
-  #   image: postgres:alpine3.18
-  #   restart: always
-    # environment:
-    #   POSTGRES_PASSWORD: example
+  db:
+    image: postgres:alpine3.18
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRESS_DB}
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+
+networks: 
+  default:
+    driver: bridge
