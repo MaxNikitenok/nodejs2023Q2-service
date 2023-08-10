@@ -8,7 +8,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const configService = app.get(ConfigService);
-  const port = configService.get<number>('PORT') || 4000;
+  const PORT = configService.get<number>('PORT') || 4000;
 
   const config = new DocumentBuilder()
     .setTitle('Home Library Service')
@@ -20,6 +20,8 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe({}));
 
-  await app.listen(port);
+  await app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
 }
 bootstrap();
